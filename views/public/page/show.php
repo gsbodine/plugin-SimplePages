@@ -8,7 +8,7 @@ if (simple_pages_is_home_page(get_current_simple_page())) {
 <?php head(array('title' => html_escape(simple_page('title')), 'bodyclass' => $bodyclass, 'bodyid' => html_escape(simple_page('slug')))); ?>
 <div id="primary">
     <?php if (!simple_pages_is_home_page(get_current_simple_page())): ?>
-    <p id="simple-pages-breadcrumbs"><?php echo simple_pages_display_breadcrumbs(); ?></p>
+    <ul id="simple-pages-breadcrumbs" class="breadcrumb"><?php echo simple_pages_display_breadcrumbs(); ?></ul>
     <?php endif; ?>
     <h1><?php echo html_escape(simple_page('title')); ?></h1>
     <?php
@@ -19,9 +19,9 @@ if (simple_pages_is_home_page(get_current_simple_page())) {
     }
     ?>
 </div>
-<?php if (!simple_pages_is_home_page(get_current_simple_page())): ?>
-<div id="secondary">
-    <?php echo simple_pages_navigation(); ?>
-</div>
-<?php endif; ?>
+<?php if (!simple_pages_is_home_page(get_current_simple_page())):
+//<div id="secondary"> ?>
+    <?php //echo simple_pages_navigation(); ?>
+<?php //</div>
+endif; ?>
 <?php echo foot(); ?>
