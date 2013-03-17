@@ -70,15 +70,15 @@ function simple_pages_navigation($parentId = 0, $sort = 'order', $requiresIsPubl
     $html = '';
     $childPageLinks = simple_pages_get_links_for_children_pages($parentId, $sort, $requiresIsPublished);
     if ($childPageLinks) {
-        $html .= '<div class="simple-pages-navigation">' . "\n";
-        $html .= '<ul class="nav nav-list"><li class="nav-header">Martha Berry Digital Archive</li>';
-        $html .= '<li class="divider"></li>';
-        //$html .= nav($childPageLinks)->setUlClass('nav nav-tabs nav-stacked');
+        $html .= '<div class="simple-pages-navigation tabbable tabs-left">';
+        $html .= '<ul class="nav nav-tabs">';
         $html .= generateMenuItem($childPageLinks);
         $html .= '</ul></div>' . "\n";
     }
     return $html;
 }
+
+
 
 function generateMenuItem($nav) {
     $html = '';
@@ -87,10 +87,12 @@ function generateMenuItem($nav) {
         if ($page['uri'] == current_url()) { 
             $activeClass = ' class="active"'; 
         }
+        
         $html .= '<li' . $activeClass . '><a href="' . $page['uri'] . '">' . $page['label'] . '</a>';
+        
         if (is_array($page) && array_key_exists('pages',$page)) {
             $html .= '<ul class="nav nav-list">';
-                $html .= generateMenuItem($page['pages']);
+            $html .= generateMenuItem($page['pages']);
             $html .= '</ul>';
         } 
         $html .= '</li>';
