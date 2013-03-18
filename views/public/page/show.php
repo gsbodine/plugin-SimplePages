@@ -5,9 +5,10 @@
     )); 
 
     $pageId = metadata('simple_pages_page', 'id');
-    $parentId = metadata('simple_pages_page', 'parent_id');
-    if ($parentId != 0) {
-        $pageId = $parentId;
+    $parent = metadata('simple_pages_page', 'parent_id');
+    if ($parent != 0) {
+        $pageId = $parent;
+        $parentPage = get_simple_page($parent);
     }
 
 ?>
@@ -17,9 +18,14 @@
         
         <div class="row">
             <div class="span3">
-                <?php echo simple_pages_navigation($parentId = $pageId) ?>
+                <?php 
+                    if ($parent != 0) {
+                        echo '<p class="pull-right lead" style="padding-bottom: 1em;margin-bottom:0;">'. metadata($parentPage, 'title') .'</p>';
+                    }
+                    echo simple_pages_navigation($parentId = $pageId);
+                ?>
             </div>
-            <div class="span9">
+            <div class="span9 simple-page-content">
                 <h1><?php echo metadata('simple_pages_page', 'title'); ?></h1>
                  <?php
                     $text = metadata('simple_pages_page', 'text', array('no_escape' => true));
