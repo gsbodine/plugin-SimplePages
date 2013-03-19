@@ -195,3 +195,8 @@ function simple_pages_get_parent_options($page)
     }
     return $valuePairs;
 }
+
+function get_simple_page($id) {
+    $page = get_db()->getTable('SimplePagesPage')->find($id);
+    return $page;
+}
