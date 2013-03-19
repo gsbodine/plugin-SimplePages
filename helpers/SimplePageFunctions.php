@@ -70,9 +70,32 @@ function simple_pages_navigation($parentId = 0, $sort = 'order', $requiresIsPubl
     $html = '';
     $childPageLinks = simple_pages_get_links_for_children_pages($parentId, $sort, $requiresIsPublished);
     if ($childPageLinks) {
-        $html .= '<div class="simple-pages-navigation">' . "\n";
-        $html .= nav($childPageLinks);
-        $html .= '</div>' . "\n";
+        $html .= '<div class="simple-pages-navigation tabbable tabs-left">';
+        $html .= '<ul class="nav nav-tabs">';
+        $html .= generateMenuItem($childPageLinks);
+        $html .= '</ul></div>' . "\n";
+    }
+    return $html;
+}
+
+
+
+function generateMenuItem($nav) {
+    $html = '';
+    foreach($nav as $page) {
+        $activeClass = '';
+        if ($page['uri'] == current_url()) { 
+            $activeClass = ' class="active"'; 
+        }
+        
+        $html .= '<li' . $activeClass . '><a href="' . $page['uri'] . '">' . $page['label'] . '</a>';
+        
+        if (is_array($page) && array_key_exists('pages',$page)) {
+            $html .= '<ul class="nav nav-list">';
+            $html .= generateMenuItem($page['pages']);
+            $html .= '</ul>';
+        } 
+        $html .= '</li>';
     }
     return $html;
 }
@@ -171,4 +194,9 @@ function simple_pages_get_parent_options($page)
         }
     }
     return $valuePairs;
+}
+
+function get_simple_page($id) {
+    $page = get_db()->getTable('SimplePagesPage')->find($id);
+    return $page;
 }
